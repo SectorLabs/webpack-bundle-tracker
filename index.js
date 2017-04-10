@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var stripAnsi = require('strip-ansi');
 var mkdirp = require('mkdirp');
+var extend = require('deep-extend');
 
 var assets = {};
 var DEFAULT_OUTPUT_FILENAME = 'webpack-stats.json';
@@ -120,7 +121,7 @@ Plugin.prototype.writeOutput = function(compiler, contents) {
   }
   mkdirp.sync(path.dirname(outputFilename));
 
-  this.contents = Object.assign(this.contents, contents);
+  this.contents = extend(this.contents, contents);
   fs.writeFileSync(
     outputFilename,
     JSON.stringify(this.contents, null, this.options.indent)
